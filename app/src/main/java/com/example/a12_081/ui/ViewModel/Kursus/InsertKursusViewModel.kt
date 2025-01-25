@@ -46,4 +46,8 @@ fun kursus.toUiStateKrs(): InsertKursusUiState = InsertKursusUiState(
 class InsertKursusViewModel (private val krs: KursusRepository): ViewModel(){
     var krsUiState by mutableStateOf(InsertKursusUiState())
         private set
+
+    fun updateInsertKursusState(insertKursusUiEvent: InsertKursusUiEvent){
+        krsUiState = InsertKursusUiState(insertKursusUiEvent = insertKursusUiEvent)
+    }
 }
