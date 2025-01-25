@@ -63,4 +63,14 @@ class DetailPendaftaranViewModel(
             }
         }
     }
+
+    fun deleteDtr(){
+        viewModelScope.launch {
+            detailDaftarUiState = DetailDaftarUiState(isLoading = true)
+            try {
+                pendaftaranRepository.deletePendaftaran(id_pendaftaran)
+                detailDaftarUiState = DetailDaftarUiState(isLoading = false)
+            }
+        }
+    }
 }
