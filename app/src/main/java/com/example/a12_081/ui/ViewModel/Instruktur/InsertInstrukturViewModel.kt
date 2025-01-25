@@ -7,3 +7,7 @@ data class InsertInstrukturEvent(
     val nomor_telepon: String= "",
     val deskripsi: String= "",
 )
+
+data class InsertInstrukturUiState(
+    val insertInstrukturUiEvent: InsertInstrukturEvent = InsertInstrukturEvent()
+)
