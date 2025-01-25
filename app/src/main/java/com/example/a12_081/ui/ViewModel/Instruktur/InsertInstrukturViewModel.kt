@@ -1,6 +1,8 @@
 package com.example.a12_081.ui.ViewModel.Instruktur
 
-data class InsertInstrukturEvent(
+import com.example.a12_081.model.instruktur
+
+data class InsertInstrukturUiEvent(
     val id_instruktur: String= "",
     val nama_instruktur: String= "",
     val email: String= "",
@@ -9,5 +11,13 @@ data class InsertInstrukturEvent(
 )
 
 data class InsertInstrukturUiState(
-    val insertInstrukturUiEvent: InsertInstrukturEvent = InsertInstrukturEvent()
+    val insertInstrukturUiEvent: InsertInstrukturUiEvent = InsertInstrukturUiEvent()
+)
+
+fun InsertInstrukturUiEvent.toIns(): instruktur = instruktur(
+    id_instruktur = id_instruktur,
+    nama_instruktur=nama_instruktur,
+    email=email,
+    nomor_telepon=nomor_telepon,
+    deskripsi=deskripsi
 )
