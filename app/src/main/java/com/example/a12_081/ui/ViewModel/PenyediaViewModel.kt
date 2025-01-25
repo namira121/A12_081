@@ -11,6 +11,10 @@ import com.example.a12_081.ui.ViewModel.Instruktur.DetailInstrukturViewModel
 import com.example.a12_081.ui.ViewModel.Instruktur.HomeInstrukturViewModel
 import com.example.a12_081.ui.ViewModel.Instruktur.InsertInstrukturViewModel
 import com.example.a12_081.ui.ViewModel.Instruktur.UpdateInstrukturViewModel
+import com.example.a12_081.ui.ViewModel.Kursus.DetailKursusViewModel
+import com.example.a12_081.ui.ViewModel.Kursus.HomeKursusViewModel
+import com.example.a12_081.ui.ViewModel.Kursus.InsertKursusViewModel
+import com.example.a12_081.ui.ViewModel.Kursus.UpdateKursusViewModel
 import com.example.a12_081.ui.ViewModel.PenyediaViewModel.BimbelApp
 import com.example.a12_081.ui.ViewModel.Siswa.DetailSiswaUiState
 import com.example.a12_081.ui.ViewModel.Siswa.DetailSiswaViewModel
@@ -29,6 +33,12 @@ object PenyediaViewModel{
         initializer { InsertInstrukturViewModel(BimbelApp().container.instrukturRepository) }
         initializer { UpdateInstrukturViewModel(createSavedStateHandle(),BimbelApp().container.instrukturRepository) }
         initializer { DetailInstrukturViewModel(createSavedStateHandle(),BimbelApp().container.instrukturRepository) }
+
+        initializer { HomeKursusViewModel(BimbelApp().container.kursusRepository) }
+        initializer { InsertKursusViewModel(BimbelApp().container.kursusRepository) }
+        initializer { UpdateKursusViewModel(createSavedStateHandle(),BimbelApp().container.kursusRepository) }
+        initializer { DetailKursusViewModel(createSavedStateHandle(),BimbelApp().container.kursusRepository) }
+
     }
     fun CreationExtras.BimbelApp():BimbelApplications =
         (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY]as BimbelApplications)
