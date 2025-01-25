@@ -8,6 +8,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.a12_081.repository.SiswaRepository
+import com.example.a12_081.ui.View.Siswa.DestinasiUpdateSiswa
 import kotlinx.coroutines.launch
 
 class UpdateSiswaViewModel(savedStateHandle: SavedStateHandle, private val siswaRepository: SiswaRepository): ViewModel(){
