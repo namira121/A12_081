@@ -42,4 +42,8 @@ fun instruktur.toUiStateIns(): InsertInstrukturUiState = InsertInstrukturUiState
 class InsertInstrukturViewModel (private val ins: InstrukturRepository): ViewModel(){
     var InsUiState by mutableStateOf(InsertInstrukturUiState())
         private set
+
+    fun updateInsertInsState(insertInstrukturUiEvent: InsertInstrukturUiEvent){
+        InsUiState = InsertInstrukturUiState(insertInstrukturUiEvent= insertInstrukturUiEvent)
+    }
 }
