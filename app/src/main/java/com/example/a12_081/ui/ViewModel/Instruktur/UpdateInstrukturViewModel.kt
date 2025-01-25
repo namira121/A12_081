@@ -25,4 +25,14 @@ class UpdateInstrukturViewModel(savedStateHandle: SavedStateHandle,private val i
     fun updateInsertInsState(insertInstrukturUiEvent: InsertInstrukturUiEvent){
         updateInstrukturUiState = InsertInstrukturUiState(insertInstrukturUiEvent = insertInstrukturUiEvent)
     }
+
+    fun updateIns(){
+        viewModelScope.launch {
+            try {
+                instrukturRepository.updateInstruktur(_id_instruktur, updateInstrukturUiState.insertInstrukturUiEvent.toIns())
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+        }
+    }
 }
