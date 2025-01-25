@@ -29,3 +29,7 @@ fun instruktur.toInsertInstrukturUiEvent():InsertInstrukturUiEvent = InsertInstr
     nomor_telepon=nomor_telepon,
     deskripsi=deskripsi
 )
+
+fun instruktur.toUiStateIns(): InsertInstrukturUiState = InsertInstrukturUiState(
+    insertInstrukturUiEvent = toInsertInstrukturUiEvent()
+)
