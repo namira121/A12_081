@@ -1,5 +1,7 @@
 package com.example.a12_081.ui.ViewModel.Kursus
 
+import com.example.a12_081.model.kursus
+
 data class InsertKursusUiEvent(
     val id_kursus: String = "",
     val nama_kursus: String = "",
@@ -11,4 +13,13 @@ data class InsertKursusUiEvent(
 
 data class InsertKursusUiState(
     val insertKursusUiEvent: InsertKursusUiEvent = InsertKursusUiEvent()
+)
+
+fun InsertKursusUiEvent.toKrs(): kursus = kursus(
+    id_kursus = id_kursus,
+    nama_kursus = nama_kursus,
+    deskripsi = deskripsi,
+    kategori = kategori,
+    harga = harga,
+    id_instruktur= id_instruktur
 )
