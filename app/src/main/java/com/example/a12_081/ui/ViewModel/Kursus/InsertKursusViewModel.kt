@@ -33,3 +33,7 @@ fun kursus.toInsertKursusUiEvent(): InsertKursusUiEvent = InsertKursusUiEvent(
     harga = harga,
     id_instruktur= id_instruktur
 )
+
+fun kursus.toUiStateKrs(): InsertKursusUiState = InsertKursusUiState(
+    insertKursusUiEvent = toInsertKursusUiEvent()
+)
