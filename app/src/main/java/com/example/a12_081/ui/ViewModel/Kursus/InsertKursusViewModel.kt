@@ -1,6 +1,11 @@
 package com.example.a12_081.ui.ViewModel.Kursus
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
 import com.example.a12_081.model.kursus
+import com.example.a12_081.repository.KursusRepository
 
 data class InsertKursusUiEvent(
     val id_kursus: String = "",
@@ -37,3 +42,8 @@ fun kursus.toInsertKursusUiEvent(): InsertKursusUiEvent = InsertKursusUiEvent(
 fun kursus.toUiStateKrs(): InsertKursusUiState = InsertKursusUiState(
     insertKursusUiEvent = toInsertKursusUiEvent()
 )
+
+class InsertKursusViewModel (private val krs: KursusRepository): ViewModel(){
+    var krsUiState by mutableStateOf(InsertKursusUiState())
+        private set
+}
