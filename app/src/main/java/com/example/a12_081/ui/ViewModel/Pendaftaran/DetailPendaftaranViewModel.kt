@@ -31,5 +31,6 @@ class DetailPendaftaranViewModel(
     savedStateHandle: SavedStateHandle,
     private val pendaftaranRepository: PendaftaranRepository
 ): ViewModel(){
+    private val id_pendaftaran: String = checkNotNull(savedStateHandle[DestinasiDetailDaftar.ID_PENDAFTARAN])
 
 }
