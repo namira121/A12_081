@@ -70,6 +70,12 @@ class DetailPendaftaranViewModel(
             try {
                 pendaftaranRepository.deletePendaftaran(id_pendaftaran)
                 detailDaftarUiState = DetailDaftarUiState(isLoading = false)
+            }catch (e: Exception){
+                detailDaftarUiState = DetailDaftarUiState(
+                    isLoading = false,
+                    isError = true,
+                    errormessage = e.message ?: "Unknown Error"
+                )
             }
         }
     }
