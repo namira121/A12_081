@@ -21,4 +21,8 @@ class UpdateInstrukturViewModel(savedStateHandle: SavedStateHandle,private val i
                 .toUiStateIns()
         }
     }
+
+    fun updateInsertInsState(insertInstrukturUiEvent: InsertInstrukturUiEvent){
+        updateInstrukturUiState = InsertInstrukturUiState(insertInstrukturUiEvent = insertInstrukturUiEvent)
+    }
 }
