@@ -27,4 +27,14 @@ class UpdateKursusViewModel (savedStateHandle: SavedStateHandle, private val kur
     fun updateInsertKrsState(insertKursusUiEvent: InsertKursusUiEvent){
         updateKursusUiState = InsertKursusUiState(insertKursusUiEvent= insertKursusUiEvent)
     }
+
+    fun updateKrs(){
+        viewModelScope.launch {
+            try {
+                kursusRepository.updateKursus(_id_kursus, updateKursusUiState.insertKursusUiEvent.toKrs())
+            }catch (e: Exception){
+                e.printStackTrace()
+            }
+        }
+    }
 }
