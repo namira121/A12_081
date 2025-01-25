@@ -23,3 +23,13 @@ fun InsertKursusUiEvent.toKrs(): kursus = kursus(
     harga = harga,
     id_instruktur= id_instruktur
 )
+
+//mengkonversi model kursus mjd event untuk ditampulkan di Ui
+fun kursus.toInsertKursusUiEvent(): InsertKursusUiEvent = InsertKursusUiEvent(
+    id_kursus = id_kursus,
+    nama_kursus = nama_kursus,
+    deskripsi = deskripsi,
+    kategori = kategori,
+    harga = harga,
+    id_instruktur= id_instruktur
+)
