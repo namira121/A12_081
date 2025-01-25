@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.a12_081.model.siswa
 import com.example.a12_081.repository.SiswaRepository
+import com.example.a12_081.ui.View.Siswa.DestinasiDetailSiswa
 import kotlinx.coroutines.launch
 
 data class DetailSiswaUiState(
