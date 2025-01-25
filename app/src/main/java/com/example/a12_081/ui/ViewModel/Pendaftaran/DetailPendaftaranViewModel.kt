@@ -38,4 +38,12 @@ class DetailPendaftaranViewModel(
 
     var detailDaftarUiState: DetailDaftarUiState by mutableStateOf(DetailDaftarUiState())
         private set
+
+    init {
+        getPendaftaranByID()
+    }
+
+    private fun getPendaftaranByID(){
+
+    }
 }
