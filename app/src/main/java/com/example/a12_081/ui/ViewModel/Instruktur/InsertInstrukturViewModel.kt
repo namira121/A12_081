@@ -21,3 +21,11 @@ fun InsertInstrukturUiEvent.toIns(): instruktur = instruktur(
     nomor_telepon=nomor_telepon,
     deskripsi=deskripsi
 )
+
+fun instruktur.toInsertInstrukturUiEvent():InsertInstrukturUiEvent = InsertInstrukturUiEvent(
+    id_instruktur = id_instruktur,
+    nama_instruktur=nama_instruktur,
+    email=email,
+    nomor_telepon=nomor_telepon,
+    deskripsi=deskripsi
+)
