@@ -7,7 +7,11 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import coil.transition.Transition
 import com.example.a12_081.BimbelApplications
+import com.example.a12_081.ui.ViewModel.Instruktur.DetailInstrukturViewModel
 import com.example.a12_081.ui.ViewModel.Instruktur.HomeInstrukturViewModel
+import com.example.a12_081.ui.ViewModel.Instruktur.InsertInstrukturViewModel
+import com.example.a12_081.ui.ViewModel.Instruktur.UpdateInstrukturViewModel
+import com.example.a12_081.ui.ViewModel.PenyediaViewModel.BimbelApp
 import com.example.a12_081.ui.ViewModel.Siswa.DetailSiswaUiState
 import com.example.a12_081.ui.ViewModel.Siswa.DetailSiswaViewModel
 import com.example.a12_081.ui.ViewModel.Siswa.HomeSiswaViewModel
@@ -22,7 +26,9 @@ object PenyediaViewModel{
         initializer { DetailSiswaViewModel(createSavedStateHandle(),BimbelApp().container.siswaRepository) }
 
         initializer { HomeInstrukturViewModel(BimbelApp().container.instrukturRepository) }
-
+        initializer { InsertInstrukturViewModel(BimbelApp().container.instrukturRepository) }
+        initializer { UpdateInstrukturViewModel(createSavedStateHandle(),BimbelApp().container.instrukturRepository) }
+        initializer { DetailInstrukturViewModel(createSavedStateHandle(),BimbelApp().container.instrukturRepository) }
     }
     fun CreationExtras.BimbelApp():BimbelApplications =
         (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY]as BimbelApplications)
