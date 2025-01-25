@@ -5,8 +5,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.a12_081.model.pendaftaran
 import com.example.a12_081.repository.PendaftaranRepository
+import kotlinx.coroutines.launch
 
 data class DetailDaftarUiState(
     val detailDaftarUiState: InsertDaftarUiEvent = InsertDaftarUiEvent(),
@@ -44,6 +46,15 @@ class DetailPendaftaranViewModel(
     }
 
     private fun getPendaftaranByID(){
-
+        viewModelScope.launch {
+            detailDaftarUiState = DetailDaftarUiState(isLoading = true)
+            try {
+                val result = pendaftaranRepository.getPendaftaranByID(id_pendaftaran)
+                detailDaftarUiState = DetailDaftarUiState(
+                    detailDaftarUiState = result.toDetailDaftarUiEvent(),
+                    isLoading = false
+                )
+            }
+        }
     }
 }
