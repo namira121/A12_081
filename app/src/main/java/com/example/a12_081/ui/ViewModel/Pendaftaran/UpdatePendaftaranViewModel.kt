@@ -7,13 +7,14 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.a12_081.repository.PendaftaranRepository
+import com.example.a12_081.ui.View.Pendaftaran.DestinasiUpdatePendaftaran
 import kotlinx.coroutines.launch
 
 class UpdateDaftarViewModel(savedStateHandle: SavedStateHandle, private val pendaftaranRepository: PendaftaranRepository): ViewModel(){
     var updateDaftarUiState by mutableStateOf(InsertDaftarUiState())
         private set
 
-    private val _id_pendafataran: String = checkNotNull(savedStateHandle[DestinasiUpdateDaftar.ID_SISWA])
+    private val _id_pendafataran: String = checkNotNull(savedStateHandle[DestinasiUpdatePendaftaran.ID_PENDAFTARAN])
 
     init {
         viewModelScope.launch {

@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.a12_081.model.kursus
 import com.example.a12_081.repository.KursusRepository
+import com.example.a12_081.ui.View.Kursus.DestinasiUpdateKursus
 import kotlinx.coroutines.launch
 
 class UpdateKursusViewModel (savedStateHandle: SavedStateHandle, private val kursusRepository: KursusRepository): ViewModel(){
