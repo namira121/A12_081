@@ -8,3 +8,7 @@ data class InsertKursusUiEvent(
     val harga: String="",
     val id_instruktur: String=""
 )
+
+data class InsertKursusUiState(
+    val insertKursusUiEvent: InsertKursusUiEvent = InsertKursusUiEvent()
+)
