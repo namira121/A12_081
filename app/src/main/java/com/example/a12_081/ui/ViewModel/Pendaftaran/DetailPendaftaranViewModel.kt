@@ -1,5 +1,8 @@
 package com.example.a12_081.ui.ViewModel.Pendaftaran
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.a12_081.model.pendaftaran
@@ -33,4 +36,6 @@ class DetailPendaftaranViewModel(
 ): ViewModel(){
     private val id_pendaftaran: String = checkNotNull(savedStateHandle[DestinasiDetailDaftar.ID_PENDAFTARAN])
 
+    var detailDaftarUiState: DetailDaftarUiState by mutableStateOf(DetailDaftarUiState())
+        private set
 }
