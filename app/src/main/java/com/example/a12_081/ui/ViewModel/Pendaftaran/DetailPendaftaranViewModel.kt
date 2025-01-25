@@ -1,6 +1,9 @@
 package com.example.a12_081.ui.ViewModel.Pendaftaran
 
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import com.example.a12_081.model.pendaftaran
+import com.example.a12_081.repository.PendaftaranRepository
 
 data class DetailDaftarUiState(
     val detailDaftarUiState: InsertDaftarUiEvent = InsertDaftarUiEvent(),
@@ -22,4 +25,11 @@ fun pendaftaran.toDetailDaftarUiEvent(): InsertDaftarUiEvent{
         id_kursus=id_kursus,
         tanggal_pendaftaran=tanggal_pendaftaran
     )
+}
+
+class DetailPendaftaranViewModel(
+    savedStateHandle: SavedStateHandle,
+    private val pendaftaranRepository: PendaftaranRepository
+): ViewModel(){
+
 }
