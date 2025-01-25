@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.a12_081.model.pendaftaran
 import com.example.a12_081.repository.PendaftaranRepository
+import com.example.a12_081.ui.View.Pendaftaran.DestinasiDetailPendaftaran
 import kotlinx.coroutines.launch
 
 data class DetailDaftarUiState(
@@ -36,7 +37,7 @@ class DetailPendaftaranViewModel(
     savedStateHandle: SavedStateHandle,
     private val pendaftaranRepository: PendaftaranRepository
 ): ViewModel(){
-    private val id_pendaftaran: String = checkNotNull(savedStateHandle[DestinasiDetailDaftar.ID_PENDAFTARAN])
+    private val id_pendaftaran: String = checkNotNull(savedStateHandle[DestinasiDetailPendaftaran.ID_PENDAFTARAN])
 
     var detailDaftarUiState: DetailDaftarUiState by mutableStateOf(DetailDaftarUiState())
         private set

@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.a12_081.model.instruktur
 import com.example.a12_081.repository.InstrukturRepository
+import com.example.a12_081.ui.View.Instruktur.DestinasiDetailInstruktur
 import kotlinx.coroutines.launch
 
 data class DetailInstrukturUiState(

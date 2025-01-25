@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.a12_081.model.kursus
 import com.example.a12_081.repository.KursusRepository
+import com.example.a12_081.ui.View.Kursus.DestinasiDetailKursus
 import kotlinx.coroutines.launch
 
 data class DetailKursusUiState(
@@ -74,7 +75,7 @@ class DetailKursusViewModel(
                 detailKursusUiState = DetailKursusUiState(
                     isLoading = false,
                     isError = true,
-                    errorMessage = e.message?: :Unknowd Error
+                    errorMessage = e.message?: "Unknown Error"
                 )
             }
         }
