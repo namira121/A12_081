@@ -4,8 +4,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.a12_081.model.instruktur
 import com.example.a12_081.repository.InstrukturRepository
+import kotlinx.coroutines.launch
 
 data class InsertInstrukturUiEvent(
     val id_instruktur: String= "",
@@ -45,5 +47,15 @@ class InsertInstrukturViewModel (private val ins: InstrukturRepository): ViewMod
 
     fun updateInsertInsState(insertInstrukturUiEvent: InsertInstrukturUiEvent){
         InsUiState = InsertInstrukturUiState(insertInstrukturUiEvent= insertInstrukturUiEvent)
+    }
+
+    suspend fun insertIns(){
+        viewModelScope.launch {
+            try {
+                ins.insertInstruktur(InsUiState.insertInstrukturUiEvent.toIns())
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+        }
     }
 }
