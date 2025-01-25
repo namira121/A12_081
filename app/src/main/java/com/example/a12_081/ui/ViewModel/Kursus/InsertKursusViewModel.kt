@@ -4,8 +4,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.a12_081.model.kursus
 import com.example.a12_081.repository.KursusRepository
+import kotlinx.coroutines.launch
 
 data class InsertKursusUiEvent(
     val id_kursus: String = "",
@@ -49,5 +51,15 @@ class InsertKursusViewModel (private val krs: KursusRepository): ViewModel(){
 
     fun updateInsertKursusState(insertKursusUiEvent: InsertKursusUiEvent){
         krsUiState = InsertKursusUiState(insertKursusUiEvent = insertKursusUiEvent)
+    }
+
+    suspend fun insertKrs(){
+        viewModelScope.launch {
+            try {
+                krs.insertKursus(krsUiState.insertKursusUiEvent.toKrs())
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+        }
     }
 }
