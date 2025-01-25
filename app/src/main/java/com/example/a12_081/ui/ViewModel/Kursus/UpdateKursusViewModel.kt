@@ -23,4 +23,8 @@ class UpdateKursusViewModel (savedStateHandle: SavedStateHandle, private val kur
                 .toUiStateKrs()
         }
     }
+
+    fun updateInsertKrsState(insertKursusUiEvent: InsertKursusUiEvent){
+        updateKursusUiState = InsertKursusUiState(insertKursusUiEvent= insertKursusUiEvent)
+    }
 }
