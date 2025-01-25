@@ -15,6 +15,11 @@ import com.example.a12_081.ui.ViewModel.Kursus.DetailKursusViewModel
 import com.example.a12_081.ui.ViewModel.Kursus.HomeKursusViewModel
 import com.example.a12_081.ui.ViewModel.Kursus.InsertKursusViewModel
 import com.example.a12_081.ui.ViewModel.Kursus.UpdateKursusViewModel
+import com.example.a12_081.ui.ViewModel.Pendaftaran.DetailDaftarUiState
+import com.example.a12_081.ui.ViewModel.Pendaftaran.DetailPendaftaranViewModel
+import com.example.a12_081.ui.ViewModel.Pendaftaran.HomePendaftaranViewModel
+import com.example.a12_081.ui.ViewModel.Pendaftaran.InsertPendaftaranViewModel
+import com.example.a12_081.ui.ViewModel.Pendaftaran.UpdateDaftarViewModel
 import com.example.a12_081.ui.ViewModel.PenyediaViewModel.BimbelApp
 import com.example.a12_081.ui.ViewModel.Siswa.DetailSiswaUiState
 import com.example.a12_081.ui.ViewModel.Siswa.DetailSiswaViewModel
@@ -39,6 +44,10 @@ object PenyediaViewModel{
         initializer { UpdateKursusViewModel(createSavedStateHandle(),BimbelApp().container.kursusRepository) }
         initializer { DetailKursusViewModel(createSavedStateHandle(),BimbelApp().container.kursusRepository) }
 
+        initializer { HomePendaftaranViewModel(BimbelApp().container.pendaftaranRepository) }
+        initializer { InsertPendaftaranViewModel(BimbelApp().container.pendaftaranRepository) }
+        initializer { UpdateDaftarViewModel(createSavedStateHandle(),BimbelApp().container.pendaftaranRepository) }
+        initializer { DetailPendaftaranViewModel(createSavedStateHandle(),BimbelApp().container.pendaftaranRepository) }
     }
     fun CreationExtras.BimbelApp():BimbelApplications =
         (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY]as BimbelApplications)
