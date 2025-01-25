@@ -54,6 +54,12 @@ class DetailPendaftaranViewModel(
                     detailDaftarUiState = result.toDetailDaftarUiEvent(),
                     isLoading = false
                 )
+            }catch (e: Exception){
+                detailDaftarUiState = DetailDaftarUiState(
+                    isLoading = false,
+                    isError = true,
+                    errormessage = e.message ?: "Unknown"
+                )
             }
         }
     }
