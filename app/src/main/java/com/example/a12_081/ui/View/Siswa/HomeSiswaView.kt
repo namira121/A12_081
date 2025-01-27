@@ -54,6 +54,7 @@ object DestinasiHomeSiswa: AlamatNavigasi{
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeSiswa(
+    navigateBack: ()->Unit,
     navigateToInsert: () -> Unit,
     modifier: Modifier = Modifier,
     onDetailClick: (String) -> Unit = {},
@@ -81,11 +82,11 @@ fun HomeSiswa(
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Tambah Siswa")
             }
         }
-    ){inneroadding ->
+    ){innerpadding ->
         HomeSiswaStatus(
             homeSiswaUiState= viewModel.swUiState,
             retryAction={viewModel.getSiswa()},
-            modifier = Modifier.padding(inneroadding),
+            modifier = Modifier.padding(innerpadding),
             onDetailClick = onDetailClick,
             onDeleteClick= {
                 viewModel.deleteSiswa(it.id_siswa)
@@ -130,7 +131,7 @@ fun HomeSiswaStatus(
 fun OnLoading(modifier: Modifier=Modifier){
     Image(
         modifier = modifier.size(200.dp),
-        painter = painterResource(R.drawable.loadingIcon),
+        painter = painterResource(R.drawable.pending),
         contentDescription = "Loading"
     )
 }
@@ -143,7 +144,7 @@ fun OnError(retryAction: () -> Unit, modifier: Modifier=Modifier){
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(id = R.drawable.errorIcon),
+            painter = painterResource(id = R.drawable.gagal),
             contentDescription = "Error"
         )
         Text(text = "Failed",
@@ -167,7 +168,7 @@ fun SwLayout(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         items(siswa){ sw ->
-            MhsCard(
+            SwCard(
                 siswa = sw,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -181,7 +182,7 @@ fun SwLayout(
 }
 
 @Composable
-fun MhsCard(
+fun SwCard(
     siswa: siswa,
     modifier: Modifier =Modifier,
     onDeleteClick: (siswa) -> Unit = {}
@@ -215,6 +216,14 @@ fun MhsCard(
                     style = MaterialTheme.typography.titleMedium
                 )
             }
+            Text(
+                text = siswa.email,
+                style = MaterialTheme.typography.titleMedium
+            )
+            Text(
+                text = siswa.nomor_telepon,
+                style = MaterialTheme.typography.titleMedium
+            )
         }
     }
 }
