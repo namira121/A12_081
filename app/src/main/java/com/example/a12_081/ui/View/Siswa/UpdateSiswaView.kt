@@ -22,7 +22,7 @@ object DestinasiUpdateSiswa: AlamatNavigasi {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UpdateSiswaView( // untuk memperbarui data mahasiswa dengan navigasi kembali
+fun UpdateSiswaView(
     id_siswa: String,
     navigateBack: () -> Unit,
     onNavigateUp: () -> Unit,
@@ -33,7 +33,7 @@ fun UpdateSiswaView( // untuk memperbarui data mahasiswa dengan navigasi kembali
     Scaffold(
         topBar = {
             CustomTopAppBar(
-                title = "Update Siswa",
+                title = DestinasiUpdateSiswa.titleRes,
                 canNavigateBack = true,
                 navigateUp = navigateBack
             )
