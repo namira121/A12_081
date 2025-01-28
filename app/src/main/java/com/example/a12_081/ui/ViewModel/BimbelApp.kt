@@ -22,6 +22,7 @@ fun BimbelApp(){
             modifier = Modifier
                 .fillMaxSize()
                 .padding(it)
+                .nestedScroll(scrollBehavior.nestedScrollConnection)
         ) {
             PengelolaHalaman()
         }

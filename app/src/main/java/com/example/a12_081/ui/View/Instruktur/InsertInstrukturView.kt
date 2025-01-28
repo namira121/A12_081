@@ -115,14 +115,14 @@ fun FormInstrukturInput(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        OutlinedTextField(
-            value = insertInstrukturUiEvent.id_instruktur,
-            onValueChange = {onValueChange(insertInstrukturUiEvent.copy(id_instruktur = it))},
-            label = { Text("ID") },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = enabled,
-            singleLine = true
-        )
+//        OutlinedTextField(
+//            value = insertInstrukturUiEvent.id_instruktur,
+//            onValueChange = {onValueChange(insertInstrukturUiEvent.copy(id_instruktur = it))},
+//            label = { Text("ID") },
+//            modifier = Modifier.fillMaxWidth(),
+//            enabled = enabled,
+//            singleLine = true
+//        )
         OutlinedTextField(
             value = insertInstrukturUiEvent.nama_instruktur,
             onValueChange = {onValueChange(insertInstrukturUiEvent.copy(nama_instruktur = it))},

@@ -18,14 +18,18 @@ data class InsertDaftarUiEvent(
     val id_pendaftaran:String = "",
     val id_siswa: String = "",
     val id_kursus: String = "",
-    val tanggal_pendaftaran: String = ""
+    val tanggal_pendaftaran: String = "",
+    val kategori: String = "",
+    val status:String = ""
 )
 
 fun InsertDaftarUiEvent.toDtr(): pendaftaran = pendaftaran(
     id_pendaftaran =id_pendaftaran,
     id_siswa=id_siswa,
     id_kursus=id_kursus,
-    tanggal_pendaftaran=tanggal_pendaftaran
+    tanggal_pendaftaran=tanggal_pendaftaran,
+    kategori=kategori,
+    status = status
 )
 
 fun pendaftaran.toUiStateDtr(): InsertDaftarUiState = InsertDaftarUiState(
@@ -36,7 +40,9 @@ fun pendaftaran.toInsertDaftarUiEvent():InsertDaftarUiEvent = InsertDaftarUiEven
     id_pendaftaran =id_pendaftaran,
     id_siswa=id_siswa,
     id_kursus=id_kursus,
-    tanggal_pendaftaran=tanggal_pendaftaran
+    tanggal_pendaftaran=tanggal_pendaftaran,
+    kategori=kategori,
+    status=status
 )
 
 class InsertPendaftaranViewModel(private val dtr: PendaftaranRepository): ViewModel(){

@@ -1,30 +1,43 @@
 package com.example.a12_081.ui.View.Kursus
 
+import android.graphics.drawable.Icon
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.a12_081.ui.CustomWidget.CustomTopAppBar
+import com.example.a12_081.ui.CustomWidget.DropDownKu
+import com.example.a12_081.ui.CustomWidget.ListInstruktur.DataNamaInstruktur
 import com.example.a12_081.ui.Navigation.AlamatNavigasi
 import com.example.a12_081.ui.View.Siswa.DestinasiInsertSiswa
+import com.example.a12_081.ui.ViewModel.Instruktur.HomeInstrukturViewModel
 import com.example.a12_081.ui.ViewModel.Kursus.InsertKursusUiEvent
 import com.example.a12_081.ui.ViewModel.Kursus.InsertKursusUiState
 import com.example.a12_081.ui.ViewModel.Kursus.InsertKursusViewModel
@@ -111,18 +124,27 @@ fun FormKursusInput(
     onValueChange: (InsertKursusUiEvent) -> Unit = {},
     enabled: Boolean =true
 ){
+    // Mengambil daftar nama instruktur
+    val NamaInsviewModel: HomeInstrukturViewModel = viewModel(factory = PenyediaViewModel.Factory)
+    val listNamaInstruktur = DataNamaInstruktur(NamaInsviewModel)
+
+    // State untuk menyimpan nilai yang dipilih
+    var selectedValue by remember { mutableStateOf(insertKursusUiEvent.id_instruktur) } // Menggunakan id_instruktur sebagai nilai awal
+
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        OutlinedTextField(
-            value = insertKursusUiEvent.id_kursus,
-            onValueChange = {onValueChange(insertKursusUiEvent.copy(id_kursus = it))},
-            label = { Text("ID") },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = enabled,
-            singleLine = true
-        )
+        val kategori = listOf("Saintek", "Soshum")
+
+//        OutlinedTextField(
+//            value = insertKursusUiEvent.id_kursus,
+//            onValueChange = {onValueChange(insertKursusUiEvent.copy(id_kursus = it))},
+//            label = { Text("ID") },
+//            modifier = Modifier.fillMaxWidth(),
+//            enabled = enabled,
+//            singleLine = true
+//        )
         OutlinedTextField(
             value = insertKursusUiEvent.nama_kursus,
             onValueChange = {onValueChange(insertKursusUiEvent.copy(nama_kursus = it))},
@@ -131,14 +153,36 @@ fun FormKursusInput(
             enabled = enabled,
             singleLine = true
         )
-        OutlinedTextField(
-            value = insertKursusUiEvent.kategori,
-            onValueChange = {onValueChange(insertKursusUiEvent.copy(kategori = it))},
-            label = { Text("Kategori") },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = enabled,
-            singleLine = true
-        )
+//        OutlinedTextField(
+//            value = insertKursusUiEvent.kategori,
+//            onValueChange = {onValueChange(insertKursusUiEvent.copy(kategori = it))},
+//            label = { Text("Kategori") },
+//            modifier = Modifier.fillMaxWidth(),
+//            enabled = enabled,
+//            singleLine = true
+//        )
+        Text(text = "Kategori")
+        Row(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            kategori.forEach { kt ->
+                Row (
+                    verticalAlignment =  Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start
+                ){
+                    RadioButton(
+                        selected = insertKursusUiEvent.kategori == kt,
+                        onClick = {
+                            onValueChange(insertKursusUiEvent.copy(kategori = kt))
+                        },
+                        )
+                    Text(
+                        text = kt,
+                    )
+
+                }
+            }
+        }
         OutlinedTextField(
             value = insertKursusUiEvent.harga,
             onValueChange = {onValueChange(insertKursusUiEvent.copy(harga = it))},
@@ -146,7 +190,8 @@ fun FormKursusInput(
             label = { Text("Harga") },
             modifier = Modifier.fillMaxWidth(),
             enabled = enabled,
-            singleLine = true
+            singleLine = true,
+
         )
         OutlinedTextField(
             value = insertKursusUiEvent.deskripsi,
@@ -156,13 +201,23 @@ fun FormKursusInput(
             enabled = enabled,
             singleLine = true
         )
-        OutlinedTextField(
-            value = insertKursusUiEvent.id_instruktur,
-            onValueChange = {onValueChange(insertKursusUiEvent.copy(id_instruktur = it))},
-            label = { Text("Instruktur") },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = enabled,
-            singleLine = true
+//        OutlinedTextField(
+//            value = insertKursusUiEvent.id_instruktur,
+//            onValueChange = {onValueChange(insertKursusUiEvent.copy(id_instruktur = it))},
+//            label = { Text("Instruktur") },
+//            modifier = Modifier.fillMaxWidth(),
+//            enabled = enabled,
+//            singleLine = true
+//        )
+        DropDownKu(
+            selectedValue = selectedValue,
+            options = listNamaInstruktur.map { it.nama }, // Menampilkan nama_instruktur
+            label = "Nama Instruktur",
+            onValueChangedEvent = { selected ->
+                val selectedInstruktur = listNamaInstruktur.find { it.nama == selected }
+                selectedValue = selectedInstruktur?.id ?: "" // Menyimpan id_instruktur, jika tidak ditemukan, set ke string kosong
+                onValueChange(insertKursusUiEvent.copy(id_instruktur = selectedInstruktur?.id ?: "")) // Memperbarui id_instruktur
+            }
         )
 
         if (enabled){
