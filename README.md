@@ -1,6 +1,22 @@
-| **Nama Gambar**                                                 | **Gambar**                                                                   |
-|-----------------------------------------------------------------|-----------------------------------------------------------------------------|
-| [update siswa[update siswa](https://github.com/user-attachments/assets/7065edb8-a003-4c59-b6c0-1e15ef014118)]| ![update pendaftaran](![update pendaftaran](https://github.com/user-attachments/assets/93b01509-34f9-4192-b200-eac8633759b6))|
-| [update instruktur[update instruktur](https://github.com/user-attachments/assets/8c245f24-67cc-4254-8595-c9d65b801cea)]| ![search kursus]![search kursus](https://github.com/user-attachments/assets/f7dc1616-c483-4014-862f-7c2e132a6a34)|
-| [main home[main home](https://github.com/user-attachments/assets/f852dfde-89b3-4b0b-ba12-705ad515f1ad)]| ![insert siswa](![insert siswa](https://github.com/user-attachments/assets/c888067c-a52c-478a-b13e-7eb963e2cfb5)
-)                                                   |
+![update siswa](https://github.com/user-attachments/assets/6e179993-a3d4-44c7-82fb-4e9751932e90)
+![update pendaftaran](https://github.com/user-attachments/assets/dc34d48d-a421-40b8-8d07-d8f5fb85a77c)
+![update instruktur](https://github.com/user-attachments/assets/2125ed98-90f3-49b6-ba4a-33743a5faee0)
+![search kursus](https://github.com/user-attachments/assets/d9f7f86d-e23f-4da5-8472-5bd0041793ad)
+![main home](https://github.com/user-attachments/assets/c99e23fe-0735-46fa-a102-17d0ac8d0d66)
+![insert siswa](https://github.com/user-attachments/assets/5a8432ac-3fa7-498d-9298-baf144b2c29f)
+![insert pendaftaran](https://github.com/user-attachments/assets/a22f1bd0-7d99-433e-bedc-98fd2d06bc54)
+![insert kursus](https://github.com/user-attachments/assets/b2d54d39-4c53-459a-ac23-28cc793c8084)
+![insert instruktur](https://github.com/user-attachments/assets/823a1cbe-2fcb-454b-bb15-aedb9f47fc6b)
+![home siswa](https://github.com/user-attachments/assets/fb940621-d0bd-4ce0-888b-861570551496)
+![home pendaftaran](https://github.com/user-attachments/assets/d82433bc-99ea-40cd-99d9-94438e545ffb)
+![home kursus](https://github.com/user-attachments/assets/6b38b514-8228-4bc8-9a6c-1385cdcb5a84)
+![home instruktur](https://github.com/user-attachments/assets/f5f315ec-57d2-4ee8-919f-df2c4fc23752)
+![hasil home siswa](https://github.com/user-attachments/assets/07da19b8-c7af-4413-ad80-2ed8ee75a298)
+![hasil home pendaftaran](https://github.com/user-attachments/assets/88592148-0157-4f66-8c0b-9969b8964dc3)
+![hasil home instruktur](https://github.com/user-attachments/assets/cf67caf7-b696-4ade-a4f1-0fea39b725e0)
+![filter soshum](https://github.com/user-attachments/assets/384d2e28-f818-4005-bfd8-ffadf5c62bcb)
+![filter saintek](https://github.com/user-attachments/assets/a4aa8781-1caf-43a1-aa13-52829ea397af)
+![detail siswa](https://github.com/user-attachments/assets/bbe295f5-db57-47d8-a2e9-587834df0c09)
+![detail pendaftaran](https://github.com/user-attachments/assets/fdc5432a-ad1a-4125-9dd2-025dac1b5586)
+![detail kursus](https://github.com/user-attachments/assets/5b80de4e-44b4-4d36-962f-7a978a1e8848)
+
