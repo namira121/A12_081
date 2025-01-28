@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -138,9 +139,10 @@ fun HomeDaftarStatus(
         is HomeDaftarUiState.Success -> {
             // Filter pendaftaran berdasarkan kategori
             val filteredPendaftaran = when (selectedCategory) {
-                "" -> homeDaftarUiState.pendaftaran // Tampilkan semua data
+                "" -> homeDaftarUiState.pendaftaran // Show all data
                 else -> homeDaftarUiState.pendaftaran.filter { pendaftaran ->
-                    pendaftaran.id_kursus.contains(selectedCategory, ignoreCase = true)
+                    // Improved filtering logic
+                    pendaftaran.kategori.startsWith(selectedCategory, ignoreCase = true)
                 }
             }
             if (filteredPendaftaran.isEmpty()) {
@@ -223,7 +225,7 @@ fun DftCard(
     pendaftaran: pendaftaran,
     modifier: Modifier = Modifier,
     onDeleteClick: (pendaftaran) -> Unit = {}
-){
+) {
     Card(
         modifier = modifier,
         shape = MaterialTheme.shapes.medium,
@@ -242,7 +244,7 @@ fun DftCard(
                     style = MaterialTheme.typography.titleLarge,
                 )
                 Spacer(Modifier.weight(1f))
-                IconButton(onClick = {onDeleteClick(pendaftaran)}) {
+                IconButton(onClick = { onDeleteClick(pendaftaran) }) {
                     Icon(
                         imageVector = Icons.Default.Delete,
                         contentDescription = null,
@@ -253,12 +255,32 @@ fun DftCard(
                     style = MaterialTheme.typography.titleMedium
                 )
             }
+            Row {
+                // Icon based on kategori
+                when (pendaftaran.kategori) {
+                    "Saintek" -> Image(
+                        painter = painterResource(id = R.drawable.sigma), // Ganti dengan resource ikon sigma Anda
+                        contentDescription = "Ikon Saintek",
+                        modifier = Modifier.size(24.dp)
+                    )
+                    "Soshum" -> Image(
+                        painter = painterResource(id = R.drawable.buku), // Ganti dengan resource ikon buku Anda
+                        contentDescription = "Ikon Soshum",
+                        modifier = Modifier.size(24.dp)
+                    )
+                    else -> Spacer(Modifier.width(8.dp)) // Add a small spacer for other categories
+                }
+                Text(
+                    text = pendaftaran.kategori,
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
             Text(
-                text = pendaftaran.id_kursus,
+                text = pendaftaran.tanggal_pendaftaran,
                 style = MaterialTheme.typography.titleMedium
             )
             Text(
-                text = pendaftaran.tanggal_pendaftaran,
+                text = pendaftaran.status,
                 style = MaterialTheme.typography.titleMedium
             )
         }

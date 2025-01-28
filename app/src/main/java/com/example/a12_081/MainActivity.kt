@@ -11,6 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.a12_081.ui.Navigation.PengelolaHalaman
+import com.example.a12_081.ui.ViewModel.BimbelApp
 import com.example.a12_081.ui.theme.A12_081Theme
 
 class MainActivity : ComponentActivity() {
@@ -18,14 +20,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            A12_081Theme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
+            BimbelApp()
         }
     }
 }

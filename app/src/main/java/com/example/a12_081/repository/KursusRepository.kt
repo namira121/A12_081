@@ -2,7 +2,7 @@ package com.example.a12_081.repository
 
 import com.example.a12_081.model.kursus
 import com.example.a12_081.model.kursusResponse
-import com.example.a12_081.service.kursusService
+import com.example.a12_081.service.KursusService
 import java.io.IOException
 
 interface KursusRepository{
@@ -11,10 +11,11 @@ interface KursusRepository{
     suspend fun updateKursus(id_kursus:String, kursus: kursus)
     suspend fun deleteKursus(id_kursus: String)
     suspend fun getKursusByID(id_kursus: String): kursus
+    suspend fun searchKursus(nama_kursus: String?, id_instruktur: String?, kategori: String?): kursusResponse
 }
 
 class NetworkKursusRepository(
-    private val KursusApiService: kursusService
+    private val KursusApiService: KursusService
 ):KursusRepository{
     override suspend fun getKursus(): kursusResponse {
        return KursusApiService.getKursus()
@@ -46,5 +47,13 @@ class NetworkKursusRepository(
     override suspend fun getKursusByID(id_kursus: String): kursus {
         return KursusApiService.getKursusByID(id_kursus).data
     }
+
+    override suspend fun searchKursus(nama_kursus: String?, id_instruktur: String?, kategori: String?): kursusResponse
+    {
+        return KursusApiService.searchKursus(nama_kursus, id_instruktur, kategori)
+    }
+
+
+
 
 }

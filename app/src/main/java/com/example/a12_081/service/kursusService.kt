@@ -14,8 +14,9 @@ import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
+import retrofit2.http.Query
 
-interface kursusService {
+interface KursusService {
     @Headers(
         "Accept: application/json",
         "Content-Type: application/json",
@@ -35,4 +36,11 @@ interface kursusService {
 
     @DELETE("{id_kursus}")
     suspend fun deleteKursus(@Path("id_kursus") id_kursus: String): Response<Void>
+
+    @GET("kursus/search")
+    suspend fun searchKursus(
+        @Query("nama_kursus") nama_kursus: String?,
+        @Query("id_instruktur") id_instruktur: String?,
+        @Query("kategori") kategori: String?
+    ): kursusResponse
 }

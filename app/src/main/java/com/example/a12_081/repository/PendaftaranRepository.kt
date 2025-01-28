@@ -4,7 +4,7 @@ import com.example.a12_081.model.pendaftaran
 import com.example.a12_081.model.pendaftaranResponse
 import com.example.a12_081.model.siswa
 import com.example.a12_081.model.siswaResponse
-import com.example.a12_081.service.pendaftaranService
+import com.example.a12_081.service.PendaftaranService
 import java.io.IOException
 
 interface PendaftaranRepository{
@@ -16,7 +16,7 @@ interface PendaftaranRepository{
 }
 
 class NetworkPendaftaranRepository(
-    private val PendaftaranApiService: pendaftaranService
+    private val PendaftaranApiService: PendaftaranService
 ):PendaftaranRepository{
     override suspend fun getPendaftaran(): pendaftaranResponse {
         return PendaftaranApiService.getPendaftaran()

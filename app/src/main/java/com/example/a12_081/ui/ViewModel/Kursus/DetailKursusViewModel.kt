@@ -53,7 +53,7 @@ class DetailKursusViewModel(
                 val result = kursusRepository.getKursusByID(id_kursus)
                 detailKursusUiState = DetailKursusUiState(
                     detailKursusUiEvent = result.toDetailKursusUiEvent(),
-                    isLoading = true
+                    isLoading = false
                 )
             }catch (e:Exception){
                 detailKursusUiState = DetailKursusUiState(

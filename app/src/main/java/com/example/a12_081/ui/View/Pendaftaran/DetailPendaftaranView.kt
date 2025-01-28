@@ -34,17 +34,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.a12_081.model.pendaftaran
-import com.example.a12_081.model.siswa
 import com.example.a12_081.ui.CustomWidget.CustomTopAppBar
 import com.example.a12_081.ui.Navigation.AlamatNavigasi
-import com.example.a12_081.ui.View.Siswa.DestinasiDetailSiswa
 import com.example.a12_081.ui.ViewModel.Pendaftaran.DetailDaftarUiState
 import com.example.a12_081.ui.ViewModel.Pendaftaran.DetailPendaftaranViewModel
 import com.example.a12_081.ui.ViewModel.Pendaftaran.toDtr
 import com.example.a12_081.ui.ViewModel.PenyediaViewModel
-import com.example.a12_081.ui.ViewModel.Siswa.DetailSiswaUiState
-import com.example.a12_081.ui.ViewModel.Siswa.DetailSiswaViewModel
-import com.example.a12_081.ui.ViewModel.Siswa.toSw
 
 object DestinasiDetailPendaftaran: AlamatNavigasi {
     override val route= "DetailPendaftaran"
@@ -63,7 +58,6 @@ fun DetailPendaftaranView(
     viewModel: DetailPendaftaranViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
@@ -88,7 +82,6 @@ fun DetailPendaftaranView(
         }
     ) { innerPadding ->
         var deleteConfirmationRequired by rememberSaveable { mutableStateOf(false) }
-
         BodyDetailDaftar(
             detailDaftarUiState = viewModel.detailDaftarUiState,
             modifier = Modifier.padding(innerPadding),
@@ -149,7 +142,6 @@ fun BodyDetailDaftar(
                     pendaftaran = detailDaftarUiState.detailDaftarUiEvent.toDtr(),
                     modifier = modifier
                 )
-
                 Spacer(modifier = Modifier.padding(8.dp))
                 Button(
                     onClick = onDeleteClick,
@@ -166,14 +158,14 @@ fun BodyDetailDaftar(
 fun ItemDetailDaftar(
     modifier: Modifier = Modifier,
     pendaftaran: pendaftaran,
-){
+    ) {
     Card(
         modifier = modifier.fillMaxWidth().padding(top = 20.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             contentColor = MaterialTheme.colorScheme.onPrimaryContainer
         )
-    ){
+    ) {
         Column(
             modifier = Modifier
                 .padding(16.dp)
@@ -184,7 +176,10 @@ fun ItemDetailDaftar(
             Spacer(modifier = Modifier.padding(4.dp))
             ComponentDetailDtr(judul = "ID Kursus", isinya = pendaftaran.id_kursus)
             Spacer(modifier = Modifier.padding(4.dp))
-            ComponentDetailDtr(judul = "Tanggal Pendaftaran", isinya = pendaftaran.tanggal_pendaftaran)
+            ComponentDetailDtr(
+                judul = "Tanggal Pendaftaran",
+                isinya = pendaftaran.tanggal_pendaftaran
+            )
             Spacer(modifier = Modifier.padding(4.dp))
         }
     }
@@ -220,7 +215,7 @@ private fun DeleteConfirmationDialog(
     onDeleteCancel: () -> Unit,
     modifier: Modifier = Modifier
 ){
-    AlertDialog(onDismissRequest = {  },
+    AlertDialog(onDismissRequest = { },
         title = { Text("Delete Data") },
         text = { Text("Apakah anda yakin ingin menghapus data?") },
         dismissButton = {

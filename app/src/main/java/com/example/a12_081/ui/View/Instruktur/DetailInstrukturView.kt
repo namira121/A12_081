@@ -43,7 +43,6 @@ import com.example.a12_081.ui.ViewModel.Instruktur.DetailInstrukturViewModel
 import com.example.a12_081.ui.ViewModel.Instruktur.toIns
 import com.example.a12_081.ui.ViewModel.PenyediaViewModel
 import com.example.a12_081.ui.ViewModel.Siswa.DetailSiswaUiState
-import com.example.a12_081.ui.ViewModel.Siswa.DetailSiswaViewModel
 import com.example.a12_081.ui.ViewModel.Siswa.toSw
 
 object DestinasiDetailInstruktur: AlamatNavigasi {

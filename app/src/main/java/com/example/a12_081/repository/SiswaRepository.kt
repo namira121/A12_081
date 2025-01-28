@@ -2,7 +2,7 @@ package com.example.a12_081.repository
 
 import com.example.a12_081.model.siswa
 import com.example.a12_081.model.siswaResponse
-import com.example.a12_081.service.siswaService
+import com.example.a12_081.service.SiswaService
 import okio.IOException
 
 interface SiswaRepository{
@@ -14,7 +14,7 @@ interface SiswaRepository{
 }
 
 class NetworkSiswaRepository(
-    private val SiswaApiService: siswaService
+    private val SiswaApiService: SiswaService
 ):SiswaRepository{
     override suspend fun getSiswa(): siswaResponse {
         return SiswaApiService.getSiswa()

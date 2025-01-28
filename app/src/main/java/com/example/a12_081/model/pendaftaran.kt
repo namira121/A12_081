@@ -7,7 +7,9 @@ data class pendaftaran (
     val id_pendaftaran: String,
     val id_siswa: String,
     val id_kursus: String,
-    val tanggal_pendaftaran: String
+    val tanggal_pendaftaran: String,
+    val kategori:String,
+    val status:String
 )
 
 @Serializable

@@ -2,7 +2,7 @@ package com.example.a12_081.repository
 
 import com.example.a12_081.model.instruktur
 import com.example.a12_081.model.instrukturResponse
-import com.example.a12_081.service.instrukturService
+import com.example.a12_081.service.InstrukturService
 import okio.IOException
 
 interface InstrukturRepository{
@@ -14,7 +14,7 @@ interface InstrukturRepository{
 }
 
 class NetworkInstrukturRepository(
-    private val InstrukturApiService: instrukturService
+    private val InstrukturApiService: InstrukturService
 ):InstrukturRepository{
     override suspend fun getInstruktur(): instrukturResponse {
         return InstrukturApiService.getInstruktur()

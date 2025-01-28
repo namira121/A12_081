@@ -29,7 +29,9 @@ fun pendaftaran.toDetailDaftarUiEvent(): InsertDaftarUiEvent{
         id_pendaftaran =id_pendaftaran,
         id_siswa=id_siswa,
         id_kursus=id_kursus,
-        tanggal_pendaftaran=tanggal_pendaftaran
+        tanggal_pendaftaran=tanggal_pendaftaran,
+        kategori=kategori,
+        status = status
     )
 }
 

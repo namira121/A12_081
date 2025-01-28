@@ -12,24 +12,26 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 
-interface siswaService{
-    @Headers(
+interface SiswaService {
+
+        @Headers(
         "Accept: application/json",
         "Content-Type: application/json",
-    )
+        )
 
-    @GET(".")
-    suspend fun getSiswa(): siswaResponse
+        @GET(".")
+        suspend fun getSiswa(): siswaResponse
 
-    @GET("{id_siswa}")
-    suspend fun getSiswaByID(@Path("id_siswa") id_siswa: String) :siswaDetailResponse
+        @GET("{id_siswa}")
+        suspend fun getSiswaByID(@Path("id_siswa") id_siswa: String) : siswaDetailResponse
 
-    @POST("addsiswa")
-    suspend fun insertSiswa(@Body siswa: siswa)
+        @POST("addsiswa")
+        suspend fun insertSiswa(@Body siswa: siswa)
 
-    @PUT("{id_siswa}")
-    suspend fun updateSiswa(@Path("id_siswa")id_siswa: String, @Body siswa: siswa)
+        @PUT("{id_siswa}")
+        suspend fun updateSiswa(@Path("id_siswa")id_siswa: String, @Body siswa: siswa)
 
-    @DELETE("{id_siswa}")
-    suspend fun deleteSiswa(@Path("id_siswa") id_siswa: String):Response <Void>
+        @DELETE("{id_siswa}")
+        suspend fun deleteSiswa(@Path("id_siswa") id_siswa: String): Response<Void>
+
 }
