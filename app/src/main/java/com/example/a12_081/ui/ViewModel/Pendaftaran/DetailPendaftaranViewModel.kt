@@ -12,16 +12,16 @@ import com.example.a12_081.ui.View.Pendaftaran.DestinasiDetailPendaftaran
 import kotlinx.coroutines.launch
 
 data class DetailDaftarUiState(
-    val detailDaftarUiState: InsertDaftarUiEvent = InsertDaftarUiEvent(),
+    val detailDaftarUiEvent: InsertDaftarUiEvent = InsertDaftarUiEvent(),
     val isLoading: Boolean = false,
     val isError: Boolean = false,
     val errormessage: String = ""
 ){
     val isUiEventEmpty: Boolean
-        get() = detailDaftarUiState == InsertDaftarUiEvent()
+        get() = detailDaftarUiEvent == InsertDaftarUiEvent()
 
     val isUiEventNotEmpty: Boolean
-        get() = detailDaftarUiState != InsertDaftarUiEvent()
+        get() = detailDaftarUiEvent != InsertDaftarUiEvent()
 }
 
 fun pendaftaran.toDetailDaftarUiEvent(): InsertDaftarUiEvent{
@@ -52,7 +52,7 @@ class DetailPendaftaranViewModel(
             try {
                 val result = pendaftaranRepository.getPendaftaranByID(id_pendaftaran)
                 detailDaftarUiState = DetailDaftarUiState(
-                    detailDaftarUiState = result.toDetailDaftarUiEvent(),
+                    detailDaftarUiEvent = result.toDetailDaftarUiEvent(),
                     isLoading = false
                 )
             }catch (e: Exception){
