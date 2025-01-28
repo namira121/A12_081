@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import coil.network.HttpException
+import retrofit2.HttpException
 import com.example.a12_081.model.kursus
 import com.example.a12_081.model.pendaftaran
 import com.example.a12_081.model.siswa
@@ -23,7 +23,7 @@ sealed class HomeKursusUiState{
 class HomeKursusViewModel(private val krs: KursusRepository): ViewModel(){
     var krsUiState: HomeKursusUiState by mutableStateOf(HomeKursusUiState.Loading)
         private set
-
+    private var allKursus: List<kursus> = listOf()
     init {
         getKursus()
     }
@@ -49,6 +49,24 @@ class HomeKursusViewModel(private val krs: KursusRepository): ViewModel(){
                 HomeKursusUiState.Error
             }catch (e: HttpException){
                 HomeKursusUiState.Error
+            }
+        }
+    }
+
+    fun searchKursus(nama_kursus: String?) {
+        viewModelScope.launch {
+            krsUiState = HomeKursusUiState.Loading
+            try {
+                val response = krs.searchKursus(nama_kursus, null, null) // Kirim nama_kursus sebagai parameter
+                krsUiState = HomeKursusUiState.Success(response.data)
+            } catch (e: HttpException) {
+                if (e.code() == 404) {
+                    krsUiState = HomeKursusUiState.Success(emptyList())
+                } else {
+                    krsUiState = HomeKursusUiState.Error
+                }
+            } catch (e: IOException) {
+                krsUiState = HomeKursusUiState.Error
             }
         }
     }

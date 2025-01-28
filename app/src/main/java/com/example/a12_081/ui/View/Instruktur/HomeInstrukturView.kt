@@ -1,6 +1,8 @@
 package com.example.a12_081.ui.View.Instruktur
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -31,12 +33,14 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.a12_081.R
 import com.example.a12_081.model.instruktur
+import com.example.a12_081.model.siswa
 import com.example.a12_081.ui.CustomWidget.CustomTopAppBar
 import com.example.a12_081.ui.Navigation.AlamatNavigasi
 import com.example.a12_081.ui.ViewModel.Instruktur.HomeInstrukturUiState
@@ -67,7 +71,8 @@ fun HomeInstruktur(
                 scrollBehavior = scrollBehavior,
                 onRefresh = {
                     viewModel.getInstruktur()
-                }
+                },
+                navigateUp = navigateBack
             )
         },
         floatingActionButton = {
@@ -164,8 +169,11 @@ fun InsLayout(
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        items(instruktur){ ins ->
-            InsCard(
+        item{
+            HeaderRowIns()
+        }
+        items(instruktur) { ins ->
+            TableRowIns(
                 instruktur = ins,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -179,52 +187,141 @@ fun InsLayout(
 }
 
 @Composable
-fun InsCard(
+fun HeaderRowIns() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(1.dp, Color.Gray) // Border for the header
+            .background(Color.LightGray)
+            .padding(16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = "ID",
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.weight(1f)
+        )
+        Text(
+            text = "Nama",
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.weight(2f)
+        )
+        Text(
+            text = "Email",
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.weight(2f)
+        )
+        Text(
+            text = "Nomor Telepon",
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.weight(2f)
+        )
+        Text(
+            text = "Deskripsi",
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.weight(2f)
+        )
+    }
+}
+
+@Composable
+fun TableRowIns(
     instruktur: instruktur,
     modifier: Modifier = Modifier,
     onDeleteClick: (instruktur) -> Unit = {}
-){
-    Card(
-        modifier = modifier,
-        shape = MaterialTheme.shapes.medium,
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+) {
+    Row(
+        modifier = modifier
+            .padding(16.dp)
+            .background(MaterialTheme.colorScheme.surface, shape = MaterialTheme.shapes.medium)
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween // Mengatur jarak antar elemen
     ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = instruktur.nama_instruktur,
-                    style = MaterialTheme.typography.titleLarge,
-                )
-                Spacer(Modifier.weight(1f))
-                IconButton(onClick = {onDeleteClick(instruktur)}) {
-                    Icon(
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = null,
-                    )
-                }
-                Text(
-                    text = instruktur.id_instruktur,
-                    style = MaterialTheme.typography.titleMedium
-                )
-            }
-            Text(
-                text = instruktur.email,
-                style = MaterialTheme.typography.titleMedium
-            )
-            Text(
-                text = instruktur.nomor_telepon,
-                style = MaterialTheme.typography.titleMedium
-            )
-            Text(
-                text = instruktur.deskripsi,
-                style = MaterialTheme.typography.titleMedium
-            )
-        }
+        // Kolom ID
+        Text(
+            text = instruktur.id_instruktur,
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.weight(1f) // Mengatur lebar kolom
+        )
+
+        // Kolom Nama
+        Text(
+            text = instruktur.nama_instruktur,
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.weight(2f) // Mengatur lebar kolom
+        )
+
+        // Kolom Email
+        Text(
+            text = instruktur.email,
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.weight(2f) // Mengatur lebar kolom
+        )
+
+        // Kolom Nomor Telepon
+        Text(
+            text = instruktur.nomor_telepon,
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.weight(2f) // Mengatur lebar kolom
+        )
+
+        Text(
+            text = instruktur.deskripsi,
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.weight(2f) // Mengatur lebar kolom
+        )
+
     }
 }
+
+//@Composable
+//fun InsCard(
+//    instruktur: instruktur,
+//    modifier: Modifier = Modifier,
+//    onDeleteClick: (instruktur) -> Unit = {}
+//){
+//    Card(
+//        modifier = modifier,
+//        shape = MaterialTheme.shapes.medium,
+//        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+//    ) {
+//        Column(
+//            modifier = Modifier.padding(16.dp),
+//            verticalArrangement = Arrangement.spacedBy(8.dp)
+//        ) {
+//            Row(
+//                modifier = Modifier.fillMaxWidth(),
+//                verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                Text(
+//                    text = instruktur.nama_instruktur,
+//                    style = MaterialTheme.typography.titleLarge,
+//                )
+//                Spacer(Modifier.weight(1f))
+//                IconButton(onClick = {onDeleteClick(instruktur)}) {
+//                    Icon(
+//                        imageVector = Icons.Default.Delete,
+//                        contentDescription = null,
+//                    )
+//                }
+//                Text(
+//                    text = instruktur.id_instruktur,
+//                    style = MaterialTheme.typography.titleMedium
+//                )
+//            }
+//            Text(
+//                text = instruktur.email,
+//                style = MaterialTheme.typography.titleMedium
+//            )
+//            Text(
+//                text = instruktur.nomor_telepon,
+//                style = MaterialTheme.typography.titleMedium
+//            )
+//            Text(
+//                text = instruktur.deskripsi,
+//                style = MaterialTheme.typography.titleMedium
+//            )
+//        }
+//    }
+//}

@@ -1,6 +1,8 @@
 package com.example.a12_081.ui.View.Siswa
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -32,6 +34,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -70,7 +73,8 @@ fun HomeSiswa(
                 scrollBehavior = scrollBehavior,
                 onRefresh = {
                     viewModel.getSiswa()
-                }
+                },
+                navigateUp = navigateBack
             )
         },
         floatingActionButton = {
@@ -167,8 +171,11 @@ fun SwLayout(
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        items(siswa){ sw ->
-            SwCard(
+        item{
+            HeaderRow()
+        }
+        items(siswa) { sw ->
+            TableRow(
                 siswa = sw,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -180,51 +187,128 @@ fun SwLayout(
         }
     }
 }
-
 @Composable
-fun SwCard(
-    siswa: siswa,
-    modifier: Modifier =Modifier,
-    onDeleteClick: (siswa) -> Unit = {}
-){
-    Card(
-        modifier = modifier,
-        shape = MaterialTheme.shapes.medium,
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+fun HeaderRow() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(1.dp, Color.Gray) // Border for the header
+            .background(Color.LightGray)
+            .padding(16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = siswa.nama_siswa,
-                    style = MaterialTheme.typography.titleLarge,
-                )
-                Spacer(Modifier.weight(1f))
-                IconButton(onClick = {onDeleteClick(siswa)}) {
-                    Icon(
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = null,
-                    )
-                }
-                Text(
-                    text = siswa.id_siswa,
-                    style = MaterialTheme.typography.titleMedium
-                )
-            }
-            Text(
-                text = siswa.email,
-                style = MaterialTheme.typography.titleMedium
-            )
-            Text(
-                text = siswa.nomor_telepon,
-                style = MaterialTheme.typography.titleMedium
-            )
-        }
+        Text(
+            text = "ID",
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.weight(1f)
+        )
+        Text(
+            text = "Nama",
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.weight(2f)
+        )
+        Text(
+            text = "Email",
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.weight(2f)
+        )
+        Text(
+            text = "Nomor Telepon",
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.weight(2f)
+        )
     }
 }
+
+@Composable
+fun TableRow(
+    siswa: siswa,
+    modifier: Modifier = Modifier,
+    onDeleteClick: (siswa) -> Unit = {}
+) {
+    Row(
+        modifier = modifier
+            .padding(16.dp)
+            .background(MaterialTheme.colorScheme.surface, shape = MaterialTheme.shapes.medium)
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween // Mengatur jarak antar elemen
+    ) {
+        // Kolom ID
+        Text(
+            text = siswa.id_siswa,
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.weight(1f) // Mengatur lebar kolom
+        )
+
+        // Kolom Nama
+        Text(
+            text = siswa.nama_siswa,
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.weight(2f) // Mengatur lebar kolom
+        )
+
+        // Kolom Email
+        Text(
+            text = siswa.email,
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.weight(2f) // Mengatur lebar kolom
+        )
+
+        // Kolom Nomor Telepon
+        Text(
+            text = siswa.nomor_telepon,
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.weight(2f) // Mengatur lebar kolom
+        )
+
+    }
+}
+
+//@Composable
+//fun SwCard(
+//    siswa: siswa,
+//    modifier: Modifier =Modifier,
+//    onDeleteClick: (siswa) -> Unit = {}
+//){
+//    Card(
+//        modifier = modifier,
+//        shape = MaterialTheme.shapes.medium,
+//        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+//    ) {
+//        Column(
+//            modifier = Modifier.padding(16.dp),
+//            verticalArrangement = Arrangement.spacedBy(8.dp)
+//        ) {
+//            Row(
+//                modifier = Modifier.fillMaxWidth(),
+//                verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                Text(
+//                    text = siswa.nama_siswa,
+//                    style = MaterialTheme.typography.titleLarge,
+//                )
+//                Spacer(Modifier.weight(1f))
+//                IconButton(onClick = {onDeleteClick(siswa)}) {
+//                    Icon(
+//                        imageVector = Icons.Default.Delete,
+//                        contentDescription = null,
+//                    )
+//                }
+//                Text(
+//                    text = siswa.id_siswa,
+//                    style = MaterialTheme.typography.titleMedium
+//                )
+//            }
+//            Text(
+//                text = siswa.email,
+//                style = MaterialTheme.typography.titleMedium
+//            )
+//            Text(
+//                text = siswa.nomor_telepon,
+//                style = MaterialTheme.typography.titleMedium
+//            )
+//        }
+//    }
+//}
 

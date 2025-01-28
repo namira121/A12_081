@@ -25,10 +25,15 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -67,7 +72,8 @@ fun HomePendaftaran(
                 scrollBehavior = scrollBehavior,
                 onRefresh = {
                     viewModel.getPendaftaran()
-                }
+                },
+                navigateUp = navigateBack
             )
         },
         floatingActionButton = {
@@ -80,16 +86,41 @@ fun HomePendaftaran(
             }
         }
     ){innerpadding ->
-        HomeDaftarStatus(
-            homeDaftarUiState= viewModel.dftUiState,
-            retryAction={viewModel.getPendaftaran()},
-            modifier = Modifier.padding(innerpadding),
-            onDetailClick = onDetailClick,
-            onDeleteClick= {
-                viewModel.deletePendaftaran(it.id_pendaftaran)
-                viewModel.getPendaftaran()
+        var selectedCategory by remember { mutableStateOf("Semua") }
+
+        Column(modifier = Modifier.padding(innerpadding)){
+            // Pilihan kategori
+            Row {
+                Text("Semua")
+                RadioButton(
+                    selected = selectedCategory == "",
+                    onClick = { selectedCategory = "" }
+                )
+                Text("Saintek")
+                RadioButton(
+                    selected = selectedCategory == "Saintek",
+                    onClick = { selectedCategory = "Saintek" }
+                )
+                Text("Soshum")
+                RadioButton(
+                    selected = selectedCategory == "Soshum",
+                    onClick = { selectedCategory = "Soshum" }
+                )
             }
-        )
+
+            // Panggil HomeDaftarStatus dengan kategori yang dipilih
+            HomeDaftarStatus(
+                homeDaftarUiState = viewModel.dftUiState,
+                retryAction = { viewModel.getPendaftaran() },
+                modifier = Modifier.fillMaxSize(),
+                onDetailClick = onDetailClick,
+                onDeleteClick = {
+                    viewModel.deletePendaftaran(it.id_pendaftaran)
+                    viewModel.getPendaftaran()
+                },
+                selectedCategory= selectedCategory // Gunakan kategori yang dipilih
+            )
+        }
     }
 }
 
@@ -99,20 +130,28 @@ fun HomeDaftarStatus(
     retryAction: () -> Unit,
     modifier: Modifier = Modifier,
     onDetailClick: (String) -> Unit,
-    onDeleteClick: (pendaftaran) -> Unit = {}
-){
-    when(homeDaftarUiState){
+    onDeleteClick: (pendaftaran) -> Unit = {},
+    selectedCategory: String
+) {
+    when (homeDaftarUiState) {
         is HomeDaftarUiState.Loading -> OnLoading(modifier = modifier.fillMaxSize())
-
-        is HomeDaftarUiState.Success ->
-            if(homeDaftarUiState.pendaftaran.isEmpty()){
-                return Box(modifier= modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        is HomeDaftarUiState.Success -> {
+            // Filter pendaftaran berdasarkan kategori
+            val filteredPendaftaran = when (selectedCategory) {
+                "" -> homeDaftarUiState.pendaftaran // Tampilkan semua data
+                else -> homeDaftarUiState.pendaftaran.filter { pendaftaran ->
+                    pendaftaran.id_kursus.contains(selectedCategory, ignoreCase = true)
+                }
+            }
+            if (filteredPendaftaran.isEmpty()) {
+                return Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Text(text = "Tidak ada data Pendaftaran")
                 }
-            }else{
+            } else {
                 DftLayout(
-                    pendaftaran=homeDaftarUiState.pendaftaran, modifier=modifier.fillMaxWidth(),
-                    onDetailClick ={
+                    pendaftaran = filteredPendaftaran,
+                    modifier = modifier.fillMaxWidth(),
+                    onDetailClick = {
                         onDetailClick(it.id_pendaftaran)
                     },
                     onDeleteClick = {
@@ -120,7 +159,8 @@ fun HomeDaftarStatus(
                     }
                 )
             }
-        is HomeDaftarUiState.Error -> OnError(retryAction, modifier= modifier.fillMaxSize())
+        }
+        is HomeDaftarUiState.Error -> OnError(retryAction, modifier = modifier.fillMaxSize())
     }
 }
 

@@ -7,9 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import coil.network.HttpException
 import com.example.a12_081.model.pendaftaran
-import com.example.a12_081.model.siswa
 import com.example.a12_081.repository.PendaftaranRepository
-import com.example.a12_081.repository.SiswaRepository
 import kotlinx.coroutines.launch
 import java.io.IOException
 
@@ -19,7 +17,8 @@ sealed class HomeDaftarUiState{
     object Loading : HomeDaftarUiState()
 }
 
-class HomePendaftaranViewModel(private val dft: PendaftaranRepository): ViewModel(){
+class HomePendaftaranViewModel(
+    private val dft: PendaftaranRepository): ViewModel(){
     var dftUiState: HomeDaftarUiState by mutableStateOf(HomeDaftarUiState.Loading)
         private set
 

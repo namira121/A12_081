@@ -12,11 +12,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -27,25 +31,29 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.a12_081.R
 import com.example.a12_081.model.kursus
-import com.example.a12_081.model.siswa
 import com.example.a12_081.ui.CustomWidget.CustomTopAppBar
 import com.example.a12_081.ui.Navigation.AlamatNavigasi
-import com.example.a12_081.ui.View.Siswa.DestinasiHomeSiswa
 import com.example.a12_081.ui.ViewModel.Kursus.HomeKursusUiState
 import com.example.a12_081.ui.ViewModel.Kursus.HomeKursusViewModel
 import com.example.a12_081.ui.ViewModel.PenyediaViewModel
-import com.example.a12_081.ui.ViewModel.Siswa.HomeSiswaUiState
-import com.example.a12_081.ui.ViewModel.Siswa.HomeSiswaViewModel
 
 object DestinasiHomeKursus: AlamatNavigasi {
     override val route= "HomeKursus"
@@ -62,6 +70,9 @@ fun HomeKursus(
     viewModel: HomeKursusViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ){
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    var searchQuery by remember { mutableStateOf("") }
+
+
     Scaffold (
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
@@ -71,7 +82,8 @@ fun HomeKursus(
                 scrollBehavior = scrollBehavior,
                 onRefresh = {
                     viewModel.getKursus()
-                }
+                },
+                navigateUp = navigateBack
             )
         },
         floatingActionButton = {
@@ -84,16 +96,30 @@ fun HomeKursus(
             }
         }
     ){innerpadding ->
-        HomeKursusStatus(
-            homeKursusUiState= viewModel.krsUiState,
-            retryAction={viewModel.getKursus()},
-            modifier = Modifier.padding(innerpadding),
-            onDetailClick = onDetailClick,
-            onDeleteClick= {
-                viewModel.deleteKursus(it.id_kursus)
-                viewModel.getKursus()
-            }
-        )
+        Column(modifier = Modifier.padding(innerpadding).nestedScroll(scrollBehavior.nestedScrollConnection)) {
+            TextField(
+                value = searchQuery,
+                onValueChange = {
+                    searchQuery = it
+                    viewModel.searchKursus(it) // Panggil fungsi pencarian dengan nama_kursus setiap kali nilai berubah
+                },
+                placeholder = { Text("Cari kursus...") },
+                modifier = Modifier.fillMaxWidth(),
+                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Search)
+            )
+
+            HomeKursusStatus(
+                homeKursusUiState = viewModel.krsUiState,
+                retryAction = { viewModel.getKursus() },
+                modifier = Modifier.fillMaxWidth(),
+                onDetailClick = onDetailClick,
+                onDeleteClick = {
+                    viewModel.deleteKursus(it.id_kursus)
+                    viewModel.getKursus()
+                },
+                searchQuery = searchQuery // Pastikan searchQuery diteruskan
+            )
+        }
     }
 }
 
@@ -103,20 +129,28 @@ fun HomeKursusStatus(
     retryAction: () -> Unit,
     modifier: Modifier = Modifier,
     onDetailClick: (String) -> Unit,
-    onDeleteClick: (kursus) -> Unit = {}
-){
-    when(homeKursusUiState){
+    onDeleteClick: (kursus) -> Unit = {},
+    searchQuery: String // Pastikan searchQuery diteruskan
+) {
+    when (homeKursusUiState) {
         is HomeKursusUiState.Loading -> OnLoading(modifier = modifier.fillMaxSize())
 
-        is HomeKursusUiState.Success ->
-            if(homeKursusUiState.kursus.isEmpty()){
-                return Box(modifier= modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text(text = "Tidak ada data Kursus")
+        is HomeKursusUiState.Success -> {
+            val filteredKursus = homeKursusUiState.kursus.filter { kursus ->
+                kursus.nama_kursus.contains(searchQuery, ignoreCase = true) ||
+                        kursus.kategori.contains(searchQuery, ignoreCase = true) ||
+                        kursus.id_instruktur.contains(searchQuery, ignoreCase = true)
+            }
+
+            if (filteredKursus.isEmpty()) {
+                Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(text = "Tidak ada hasil ditemukan untuk '$searchQuery'")
                 }
-            }else{
+            } else {
                 KrsLayout(
-                    kursus=homeKursusUiState.kursus, modifier=modifier.fillMaxWidth(),
-                    onDetailClick ={
+                    kursus = filteredKursus,
+                    modifier = modifier.fillMaxWidth(),
+                    onDetailClick = {
                         onDetailClick(it.id_kursus)
                     },
                     onDeleteClick = {
@@ -124,7 +158,15 @@ fun HomeKursusStatus(
                     }
                 )
             }
-        is HomeKursusUiState.Error -> OnError(retryAction, modifier= modifier.fillMaxSize())
+        }
+
+        is HomeKursusUiState.Error -> OnError(retryAction, modifier = modifier.fillMaxSize())
+
+        else -> {
+            Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Text(text = "Terjadi kesalahan yang tidak terduga.")
+            }
+        }
     }
 }
 
@@ -187,7 +229,7 @@ fun KrsCard(
     kursus: kursus,
     modifier: Modifier = Modifier,
     onDeleteClick: (kursus) -> Unit = {}
-){
+) {
     Card(
         modifier = modifier,
         shape = MaterialTheme.shapes.medium,
@@ -206,7 +248,7 @@ fun KrsCard(
                     style = MaterialTheme.typography.titleLarge,
                 )
                 Spacer(Modifier.weight(1f))
-                IconButton(onClick = {onDeleteClick(kursus)}) {
+                IconButton(onClick = { onDeleteClick(kursus) }) {
                     Icon(
                         imageVector = Icons.Default.Delete,
                         contentDescription = null,
@@ -217,10 +259,32 @@ fun KrsCard(
                     style = MaterialTheme.typography.titleMedium
                 )
             }
-            Text(
-                text = kursus.kategori,
-                style = MaterialTheme.typography.titleMedium
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                // Menampilkan ikon berdasarkan kategori
+                when (kursus.kategori) {
+                    "Saintek" -> {
+                        Image(
+                            painter = painterResource(id = R.drawable.sigma), // Ganti dengan resource ikon sigma Anda
+                            contentDescription = "Ikon Saintek",
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
+                    "Soshum" -> {
+                        Image(
+                            painter = painterResource(id = R.drawable.buku), // Ganti dengan resource ikon buku Anda
+                            contentDescription = "Ikon Soshum",
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = kursus.kategori,
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
             Text(
                 text = kursus.deskripsi,
                 style = MaterialTheme.typography.titleMedium
